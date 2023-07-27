@@ -21,27 +21,121 @@ weatherForm.addEventListener('submit', (event) => {
 
 async function getWeatherData(location) {
   try {
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}`);
-    const data = await response.json();
-    displayWeatherData(data);
+    const currentWeatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}`);
+    const currentWeatherData = await currentWeatherResponse.json();
+
+    const forecastResponse = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${apiKey}`);
+    const forecastData = await forecastResponse.json();
+
+    displayWeatherData(currentWeatherData, forecastData);
   } catch (error) {
     console.log('Error fetching weather data:', error);
   }
 }
 
-function displayWeatherData(data) {
-  const weatherData = {
-    city: data.name,
-    country: data.sys.country,
-    temperature: data.main.temp,
-    description: data.weather[0].description,
+function displayWeatherData(currentData, forecastData) {
+  const currentWeatherData = {
+    city: currentData.name,
+    country: currentData.sys.country,
+    temperature: currentData.main.temp,
+    description: currentData.weather[0].description,
+    humidity: currentData.main.humidity,
+    windSpeed: currentData.wind.speed,
+    windDirection: currentData.wind.deg,
+    rain: currentData.rain ? currentData.rain['1h'] : 0,
+    cloudiness: currentData.clouds.all,
+    date: new Date(currentData.dt * 1000),
   };
 
-  weatherInfo.innerHTML = `
-    <p><strong>Location:</strong> ${weatherData.city}, ${weatherData.country}</p>
-    <p><strong>Temperature:</strong> ${convertKelvinToCelsius(weatherData.temperature)}°C</p>
-    <p><strong>Description:</strong> ${weatherData.description}</p>
+  const currentWeatherTable = createWeatherTable(currentWeatherData);
+  weatherInfo.innerHTML = '';
+  weatherInfo.appendChild(currentWeatherTable);
+
+  // Process and display the next hours forecast
+  const forecastNextHours = forecastData.list.slice(0, 5); // Get the next 5 hours forecast
+  const nextHoursTable = createNextHoursTable(forecastNextHours);
+  weatherInfo.appendChild(nextHoursTable);
+}
+
+function createWeatherTable(data) {
+  const table = document.createElement('table');
+  table.innerHTML = `
+    <caption>Current Weather</caption>
+    <tr>
+      <td><strong>Location:</strong></td>
+      <td>${data.city}, ${data.country}</td>
+    </tr>
+    <tr>
+      <td><strong>Temperature:</strong></td>
+      <td>${convertKelvinToCelsius(data.temperature)}°C</td>
+    </tr>
+    <tr>
+      <td><strong>Description:</strong></td>
+      <td>${data.description}</td>
+    </tr>
+    <tr>
+      <td><strong>Humidity:</strong></td>
+      <td>${data.humidity}%</td>
+    </tr>
+    <tr>
+      <td><strong>Wind Speed:</strong></td>
+      <td>${data.windSpeed} m/s</td>
+    </tr>
+    <tr>
+      <td><strong>Wind Direction:</strong></td>
+      <td>${data.windDirection}°</td>
+    </tr>
+    <tr>
+      <td><strong>Rain (last hour):</strong></td>
+      <td>${data.rain} mm</td>
+    </tr>
+    <tr>
+      <td><strong>Cloudiness:</strong></td>
+      <td>${data.cloudiness}%</td>
+    </tr>
+    <tr>
+      <td><strong>Date:</strong></td>
+      <td>${formatDate(data.date)}</td>
+    </tr>
   `;
+  return table;
+}
+
+function createNextHoursTable(data) {
+  const table = document.createElement('table');
+  table.innerHTML = `
+    <caption>Next Hours Forecast</caption>
+    <tr>
+      <th><strong>Time</strong></th>
+      <th><strong>Temperature</strong></th>
+      <th><strong>Description</strong></th>
+    </tr>
+  `;
+  data.forEach((hourData) => {
+    const dateTime = new Date(hourData.dt * 1000);
+    const time = formatTime(dateTime);
+    const temperature = convertKelvinToCelsius(hourData.main.temp);
+    const description = hourData.weather[0].description;
+
+    table.innerHTML += `
+      <tr>
+        <td>${time}</td>
+        <td>${temperature}°C</td>
+        <td>${description}</td>
+      </tr>
+    `;
+  });
+  return table;
+}
+
+function formatDate(date) {
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  return date.toLocaleDateString(undefined, options);
+}
+
+function formatTime(date) {
+  const options = { hour: '2-digit', minute: '2-digit' };
+  return date.toLocaleTimeString(undefined, options);
 }
 
 function convertKelvinToCelsius(kelvin) {

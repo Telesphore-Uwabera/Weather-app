@@ -1,1 +1,2 @@
 Weather app
+API-KEY ='8f345d03578547f1fe731714f7eab502'
