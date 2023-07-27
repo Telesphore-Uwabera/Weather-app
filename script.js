@@ -48,12 +48,14 @@ function displayWeatherData(currentData, forecastData) {
   };
 
   const currentWeatherTable = createWeatherTable(currentWeatherData);
+  currentWeatherTable.classList.add('weather-box'); // Add the weather-box class
   weatherInfo.innerHTML = '';
   weatherInfo.appendChild(currentWeatherTable);
 
   // Process and display the next hours forecast
   const forecastNextHours = forecastData.list.slice(0, 5); // Get the next 5 hours forecast
   const nextHoursTable = createNextHoursTable(forecastNextHours);
+  nextHoursTable.classList.add('weather-box'); // Add the weather-box class
   weatherInfo.appendChild(nextHoursTable);
 }
 
