@@ -1,2 +1,1 @@
-Weather app
-API-KEY ='8f345d03578547f1fe731714f7eab502'
+The link to weather app is https://telesphore-uwabera.github.io/weather-app/
