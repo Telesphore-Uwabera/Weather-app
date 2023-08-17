@@ -42,8 +42,10 @@ function displayWeatherData(currentData, forecastData) {
     windDirection: currentData.wind.deg,
     rain: currentData.rain ? currentData.rain['1h'] : 0,
     cloudiness: currentData.clouds.all,
+    pressure: currentData.main.pressure,
+    sunshineQuantity: currentData.snow ? currentData.snow['1h'] : 0,
     date: new Date(currentData.dt * 1000),
-  };
+};
 
   const currentWeatherTable = createWeatherTable(currentWeatherData);
   currentWeatherTable.classList.add('weather-box'); 
