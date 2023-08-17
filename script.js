@@ -32,7 +32,7 @@ async function getWeatherData(location) {
 }
 
 function displayWeatherData(currentData, forecastData) {
-  const currentWeatherData = {
+ const currentWeatherData = {
     city: currentData.name,
     country: currentData.sys.country,
     temperature: currentData.main.temp,
@@ -44,6 +44,8 @@ function displayWeatherData(currentData, forecastData) {
     cloudiness: currentData.clouds.all,
     pressure: currentData.main.pressure,
     sunshineQuantity: currentData.snow ? currentData.snow['1h'] : 0,
+    sunrise: new Date(currentData.sys.sunrise * 1000),
+    sunset: new Date(currentData.sys.sunset * 1000),
     date: new Date(currentData.dt * 1000),
 };
 
