@@ -21,9 +21,9 @@ table>caption {
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  background-color: whitesmoke;
+  border-radius: 10px;
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.5);
+  background-color: rgb(197, 194, 194);
 }
 
 h1 {
