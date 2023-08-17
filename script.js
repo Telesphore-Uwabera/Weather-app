@@ -3,10 +3,8 @@ const weatherForm = document.getElementById('weatherForm');
 const locationInput = document.getElementById('locationInput');
 const weatherInfo = document.getElementById('weatherInfo');
 
-// Set "Kigali" as the default location
 const defaultLocation = 'Kigali';
 
-// Fetch weather data for the default location when the page loads
 window.addEventListener('load', () => {
   getWeatherData(defaultLocation);
 });
@@ -48,14 +46,13 @@ function displayWeatherData(currentData, forecastData) {
   };
 
   const currentWeatherTable = createWeatherTable(currentWeatherData);
-  currentWeatherTable.classList.add('weather-box'); // Add the weather-box class
+  currentWeatherTable.classList.add('weather-box'); 
   weatherInfo.innerHTML = '';
   weatherInfo.appendChild(currentWeatherTable);
 
-  // Process and display the next hours forecast
-  const forecastNextHours = forecastData.list.slice(0, 5); // Get the next 5 hours forecast
+  const forecastNextHours = forecastData.list.slice(0, 5); 
   const nextHoursTable = createNextHoursTable(forecastNextHours);
-  nextHoursTable.classList.add('weather-box'); // Add the weather-box class
+  nextHoursTable.classList.add('weather-box'); 
   weatherInfo.appendChild(nextHoursTable);
 }
 
