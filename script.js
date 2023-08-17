@@ -3,10 +3,8 @@ const weatherForm = document.getElementById('weatherForm');
 const locationInput = document.getElementById('locationInput');
 const weatherInfo = document.getElementById('weatherInfo');
 
-// Set "Kigali" as the default location
 const defaultLocation = 'Kigali';
 
-// Fetch weather data for the default location when the page loads
 window.addEventListener('load', () => {
   getWeatherData(defaultLocation);
 });
