@@ -32,7 +32,7 @@ async function getWeatherData(location) {
 }
 
 function displayWeatherData(currentData, forecastData) {
- const currentWeatherData = {
+  const currentWeatherData = {
     city: currentData.name,
     country: currentData.sys.country,
     temperature: currentData.main.temp,
@@ -42,21 +42,21 @@ function displayWeatherData(currentData, forecastData) {
     windDirection: currentData.wind.deg,
     rain: currentData.rain ? currentData.rain['1h'] : 0,
     cloudiness: currentData.clouds.all,
-    pressure: currentData.main.pressure,
+    pressure: currentData.main.pressure || 0,
     sunshineQuantity: currentData.snow ? currentData.snow['1h'] : 0,
-    sunrise: new Date(currentData.sys.sunrise * 1000),
-    sunset: new Date(currentData.sys.sunset * 1000),
+    sunrise: currentData.sys.sunrise ? new Date(currentData.sys.sunrise * 1000) : null,
+    sunset: currentData.sys.sunset ? new Date(currentData.sys.sunset * 1000) : null,
     date: new Date(currentData.dt * 1000),
-};
+  };
 
   const currentWeatherTable = createWeatherTable(currentWeatherData);
-  currentWeatherTable.classList.add('weather-box'); 
+  currentWeatherTable.classList.add('weather-box');
   weatherInfo.innerHTML = '';
   weatherInfo.appendChild(currentWeatherTable);
 
-  const forecastNextHours = forecastData.list.slice(0, 5); 
+  const forecastNextHours = forecastData.list.slice(0, 5);
   const nextHoursTable = createNextHoursTable(forecastNextHours);
-  nextHoursTable.classList.add('weather-box'); 
+  nextHoursTable.classList.add('weather-box');
   weatherInfo.appendChild(nextHoursTable);
 }
 
@@ -95,6 +95,22 @@ function createWeatherTable(data) {
     <tr>
       <td><strong>Cloudiness:</strong></td>
       <td>${data.cloudiness}%</td>
+    </tr>
+    <tr>
+      <td><strong>Pressure:</strong></td>
+      <td>${data.pressure} hPa</td>
+    </tr>
+    <tr>
+      <td><strong>Sunshine Quantity:</strong></td>
+      <td>${data.sunshineQuantity} mm</td>
+    </tr>
+    <tr>
+      <td><strong>Sunrise:</strong></td>
+      <td>${data.sunrise ? formatTime(data.sunrise) : 'N/A'}</td>
+    </tr>
+    <tr>
+      <td><strong>Sunset:</strong></td>
+      <td>${data.sunset ? formatTime(data.sunset) : 'N/A'}</td>
     </tr>
     <tr>
       <td><strong>Date:</strong></td>
