@@ -43,7 +43,6 @@ function displayWeatherData(currentData, forecastData) {
     rain: currentData.rain ? currentData.rain['1h'] : 0,
     cloudiness: currentData.clouds.all,
     pressure: currentData.main.pressure || 0,
-    sunshineQuantity: currentData.snow ? currentData.snow['1h'] : 0,
     sunrise: currentData.sys.sunrise ? new Date(currentData.sys.sunrise * 1000) : null,
     sunset: currentData.sys.sunset ? new Date(currentData.sys.sunset * 1000) : null,
     date: new Date(currentData.dt * 1000),
@@ -99,10 +98,6 @@ function createWeatherTable(data) {
     <tr>
       <td><strong>Pressure:</strong></td>
       <td>${data.pressure} hPa</td>
-    </tr>
-    <tr>
-      <td><strong>Sunshine Quantity:</strong></td>
-      <td>${data.sunshineQuantity} mm</td>
     </tr>
     <tr>
       <td><strong>Sunrise:</strong></td>
