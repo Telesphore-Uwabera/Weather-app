@@ -50,7 +50,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Author
 
 - Telesphore Uwabera
-- GitHub: [Your GitHub Profile](https://github.com/Telesphore-Uwabera)
+- GitHub: [Telesphore-Uwabera](https://github.com/Telesphore-Uwabera)
 
 ## Contributing
 
