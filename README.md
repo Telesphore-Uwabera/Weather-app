@@ -60,4 +60,4 @@ Contributions are welcome! If you would like to contribute to this project, plea
 
 Enjoy checking the weather with this simple weather application!
 
-The link to weather app page is https://telesphore-uwabera.github.io/weather-app/
+The link to weather app page is [Weather App](https://telesphore-uwabera.github.io/weather-app/)
